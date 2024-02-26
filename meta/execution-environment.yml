@@ -1,0 +1,11 @@
+---
+# Do not delete these files even if the collection has no dependencies!
+# If you delete them, ansible-builder will use bindep.txt and requirements.txt
+# from the collection root by default. Especially requirements.txt in the root is often
+# used for test/build/development requirements for the collection, that are
+# not needed for end-users to use the collection. Ansible-builder installing these
+# would increase the EE size and increase the chance of dependency collisions.
+
+dependencies:
+  python: meta/ee-requirements.txt
+  system: meta/ee-bindep.txt

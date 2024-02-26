@@ -1,0 +1,7 @@
+---
+# This will make sure that plugin and module documentation gets Edit on GitHub links
+# that allow users to directly create a PR for this plugin or module in GitHub's UI.
+edit_on_github:
+  repository: ansible-collections/community.proxmox
+  branch: main
+  path_prefix: ''
