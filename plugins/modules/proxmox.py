@@ -8,14 +8,14 @@
 from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
-DOCUMENTATION = '''
+DOCUMENTATION = r'''
 ---
 module: proxmox
 short_description: Management of instances in Proxmox VE cluster
+version_added: 1.0.0
 description:
   - Allows you to create/delete/stop instances in Proxmox VE cluster.
   - The module automatically detects containerization type (lxc for PVE 4, openvz for older).
-  - Since community.general 4.0.0 on, there are no more default values, see O(proxmox_default_behavior).
 attributes:
   check_mode:
     support: none
@@ -80,7 +80,6 @@ options:
       - Some features require the use of a privileged container.
     type: list
     elements: str
-    version_added: 2.0.0
   mounts:
     description:
       - specifies additional mounts (separate disks) for the container. As a hash/dictionary defining mount points
@@ -107,7 +106,6 @@ options:
     choices: ['auto', 'debian', 'devuan', 'ubuntu', 'centos', 'fedora', 'opensuse', 'archlinux', 'alpine', 'gentoo', 'nixos', 'unmanaged']
     type: str
     default: 'auto'
-    version_added: 8.1.0
   cpuunits:
     description:
       - CPU weight for a VM
@@ -128,7 +126,6 @@ options:
       - Tags are only available in Proxmox 7+.
     type: list
     elements: str
-    version_added: 6.2.0
   timeout:
     description:
       - timeout for operations
@@ -139,7 +136,6 @@ options:
       - If V(true), the container will be updated with new values.
     type: bool
     default: false
-    version_added: 8.1.0
   force:
     description:
       - Forcing operations.
@@ -156,11 +152,9 @@ options:
       - Used with O(state=absent).
     type: bool
     default: false
-    version_added: 2.3.0
   state:
     description:
      - Indicate desired state of the instance
-     - V(template) was added in community.general 8.1.0.
     type: str
     choices: ['present', 'started', 'absent', 'stopped', 'restarted', 'template']
     default: present
@@ -171,7 +165,6 @@ options:
   unprivileged:
     description:
       - Indicate if the container should be unprivileged.
-      - The default change to V(true) in community.general 7.0.0. It used to be V(false) before.
     type: bool
     default: true
   description:
@@ -179,18 +172,15 @@ options:
       - Specify the description for the container. Only used on the configuration web interface.
       - This is saved as a comment inside the configuration file.
     type: str
-    version_added: '0.2.0'
   hookscript:
     description:
       - Script that will be executed during various steps in the containers lifetime.
     type: str
-    version_added: '0.2.0'
   timezone:
     description:
       - Timezone used by the container, accepts values like V(Europe/Paris).
       - The special value V(host) configures the same timezone used by Proxmox host.
     type: str
-    version_added: '7.1.0'
   proxmox_default_behavior:
     description:
       - As of community.general 4.0.0, various options no longer have default values.
@@ -201,7 +191,7 @@ options:
         which makes sure these options have no defaults.
       - This affects the O(disk), O(cores), O(cpus), O(memory), O(onboot), O(swap), and O(cpuunits) options.
       - >
-        This parameter is now B(deprecated) and it will be removed in community.general 10.0.0.
+        This parameter is now B(deprecated) and it will be removed in community.proxmox 3.0.0.
         By then, the module's behavior should be to not set default values, equivalent to V(no_defaults).
         If a consistent set of defaults is needed, the playbook or role should be responsible for setting it.
     type: str
@@ -209,7 +199,6 @@ options:
     choices:
       - compatibility
       - no_defaults
-    version_added: "1.3.0"
   clone:
     description:
       - ID of the container to be cloned.
@@ -217,7 +206,6 @@ options:
       - The type of clone created is defined by the O(clone_type) parameter.
       - This operator is only supported for Proxmox clusters that use LXC containerization (PVE version >= 4).
     type: int
-    version_added: 4.3.0
   clone_type:
     description:
       - Type of the clone created.
@@ -228,19 +216,18 @@ options:
     type: str
     choices: ['full', 'linked', 'opportunistic']
     default: opportunistic
-    version_added: 4.3.0
 author: Sergei Antipov (@UnderGreen)
 seealso:
-  - module: community.general.proxmox_vm_info
+  - module: community.proxmox.proxmox_vm_info
 extends_documentation_fragment:
-  - community.general.proxmox.documentation
-  - community.general.proxmox.selection
-  - community.general.attributes
+  - community.proxmox.proxmox.documentation
+  - community.proxmox.proxmox.selection
+  - community.proxmox.attributes
 '''
 
 EXAMPLES = r'''
 - name: Create new container with minimal options
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -251,7 +238,7 @@ EXAMPLES = r'''
     ostemplate: 'local:vztmpl/ubuntu-14.04-x86_64.tar.gz'
 
 - name: Create new container with minimal options specifying disk storage location and size
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -263,7 +250,7 @@ EXAMPLES = r'''
     disk: 'local-lvm:20'
 
 - name: Create new container with hookscript and description
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -276,7 +263,7 @@ EXAMPLES = r'''
     description: created with ansible
 
 - name: Create new container automatically selecting the next available vmid.
-  community.general.proxmox:
+  community.proxmox.proxmox:
     node: 'uk-mc02'
     api_user: 'root@pam'
     api_password: '1q2w3e'
@@ -286,7 +273,7 @@ EXAMPLES = r'''
     ostemplate: 'local:vztmpl/ubuntu-14.04-x86_64.tar.gz'
 
 - name: Create new container with minimal options with force(it will rewrite existing container)
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -298,7 +285,7 @@ EXAMPLES = r'''
     force: true
 
 - name: Create new container with minimal options use environment PROXMOX_PASSWORD variable(you should export it before)
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -308,7 +295,7 @@ EXAMPLES = r'''
     ostemplate: 'local:vztmpl/ubuntu-14.04-x86_64.tar.gz'
 
 - name: Create new container with minimal options defining network interface with dhcp
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -320,7 +307,7 @@ EXAMPLES = r'''
     netif: '{"net0":"name=eth0,ip=dhcp,ip6=dhcp,bridge=vmbr0"}'
 
 - name: Create new container with minimal options defining network interface with static ip
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -332,7 +319,7 @@ EXAMPLES = r'''
     netif: '{"net0":"name=eth0,gw=192.168.0.1,ip=192.168.0.2/24,bridge=vmbr0"}'
 
 - name: Create new container with minimal options defining a mount with 8GB
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -344,7 +331,7 @@ EXAMPLES = r'''
     mounts: '{"mp0":"local:8,mp=/mnt/test/"}'
 
 - name: Create new container with minimal options defining a cpu core limit
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -356,7 +343,7 @@ EXAMPLES = r'''
     cores: 2
 
 - name: Create new container with minimal options and same timezone as proxmox host
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -368,7 +355,7 @@ EXAMPLES = r'''
     timezone: host
 
 - name: Create a new container with nesting enabled and allows the use of CIFS/NFS inside the container.
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -384,7 +371,7 @@ EXAMPLES = r'''
 - name: >
     Create a linked clone of the template container with id 100. The newly created container with be a
     linked clone, because no storage parameter is defined
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 201
     node: uk-mc02
     api_user: root@pam
@@ -394,7 +381,7 @@ EXAMPLES = r'''
     hostname: clone.example.org
 
 - name: Create a full clone of the container with id 100
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 201
     node: uk-mc02
     api_user: root@pam
@@ -405,7 +392,7 @@ EXAMPLES = r'''
     storage: local
 
 - name: Update container configuration
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     node: uk-mc02
     api_user: root@pam
@@ -415,7 +402,7 @@ EXAMPLES = r'''
     update: true
 
 - name: Start container
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -425,7 +412,7 @@ EXAMPLES = r'''
 - name: >
     Start container with mount. You should enter a 90-second timeout because servers
     with additional disks take longer to boot
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -434,7 +421,7 @@ EXAMPLES = r'''
     timeout: 90
 
 - name: Stop container
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -442,7 +429,7 @@ EXAMPLES = r'''
     state: stopped
 
 - name: Stop container with force
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -451,7 +438,7 @@ EXAMPLES = r'''
     state: stopped
 
 - name: Restart container(stopped or mounted container you can't restart)
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -459,7 +446,7 @@ EXAMPLES = r'''
     state: restarted
 
 - name: Convert container to template
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -467,7 +454,7 @@ EXAMPLES = r'''
     state: template
 
 - name: Convert container to template (stop container if running)
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -476,7 +463,7 @@ EXAMPLES = r'''
     force: true
 
 - name: Remove container
-  community.general.proxmox:
+  community.proxmox.proxmox:
     vmid: 100
     api_user: root@pam
     api_password: 1q2w3e
@@ -487,12 +474,12 @@ EXAMPLES = r'''
 import re
 import time
 
-from ansible_collections.community.general.plugins.module_utils.version import LooseVersion
+from ansible_collections.community.proxmox.plugins.module_utils.version import LooseVersion
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.text.converters import to_native
 
-from ansible_collections.community.general.plugins.module_utils.proxmox import (
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (
     ansible_to_proxmox_bool, proxmox_auth_argument_spec, ProxmoxAnsible)
 
 VZ_TYPE = None
@@ -776,7 +763,7 @@ def main():
         hookscript=dict(type='str'),
         timezone=dict(type='str'),
         proxmox_default_behavior=dict(type='str', default='no_defaults', choices=['compatibility', 'no_defaults'],
-                                      removed_in_version='9.0.0', removed_from_collection='community.general'),
+                                      removed_in_version='3.0.0', removed_from_collection='community.proxmox'),
         clone=dict(type='int'),
         clone_type=dict(default='opportunistic', choices=['full', 'linked', 'opportunistic']),
         tags=dict(type='list', elements='str')

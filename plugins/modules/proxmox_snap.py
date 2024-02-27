@@ -12,7 +12,7 @@ DOCUMENTATION = r'''
 ---
 module: proxmox_snap
 short_description: Snapshot management of instances in Proxmox VE cluster
-version_added: 2.0.0
+version_added: 1.0.0
 description:
   - Allows you to create/delete/restore snapshots from instances in Proxmox VE cluster.
   - Supports both KVM and LXC, OpenVZ has not been tested, as it is no longer supported on Proxmox VE.
@@ -34,7 +34,7 @@ options:
   state:
     description:
      - Indicate desired state of the instance snapshot.
-     - The V(rollback) value was added in community.general 4.8.0.
+     - The V(rollback) value was added in community.proxmox 4.8.0.
     choices: ['present', 'absent', 'rollback']
     default: present
     type: str
@@ -53,7 +53,6 @@ options:
       - See U(https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/lxc/{vmid}/config) (PUT tab) for more details.
     default: false
     type: bool
-    version_added: 5.7.0
   vmstate:
     description:
       - Snapshot includes RAM.
@@ -82,20 +81,19 @@ options:
         If no snapshot is created, all existing snapshots will be kept.
     default: 0
     type: int
-    version_added: 7.1.0
 
 notes:
   - Requires proxmoxer and requests modules on host. These modules can be installed with pip.
 requirements: [ "proxmoxer", "requests" ]
 author: Jeffrey van Pelt (@Thulium-Drake)
 extends_documentation_fragment:
-    - community.general.proxmox.documentation
-    - community.general.attributes
+    - community.proxmox.proxmox.documentation
+    - community.proxmox.attributes
 '''
 
 EXAMPLES = r'''
 - name: Create new container snapshot
-  community.general.proxmox_snap:
+  community.proxmox.proxmox_snap:
     api_user: root@pam
     api_password: 1q2w3e
     api_host: node1
@@ -104,7 +102,7 @@ EXAMPLES = r'''
     snapname: pre-updates
 
 - name: Create new container snapshot and keep only the 2 newest snapshots
-  community.general.proxmox_snap:
+  community.proxmox.proxmox_snap:
     api_user: root@pam
     api_password: 1q2w3e
     api_host: node1
@@ -114,7 +112,7 @@ EXAMPLES = r'''
     retention: 2
 
 - name: Create new snapshot for a container with configured mountpoints
-  community.general.proxmox_snap:
+  community.proxmox.proxmox_snap:
     api_user: root@pam
     api_password: 1q2w3e
     api_host: node1
@@ -124,7 +122,7 @@ EXAMPLES = r'''
     snapname: pre-updates
 
 - name: Remove container snapshot
-  community.general.proxmox_snap:
+  community.proxmox.proxmox_snap:
     api_user: root@pam
     api_password: 1q2w3e
     api_host: node1
@@ -133,7 +131,7 @@ EXAMPLES = r'''
     snapname: pre-updates
 
 - name: Rollback container snapshot
-  community.general.proxmox_snap:
+  community.proxmox.proxmox_snap:
     api_user: root@pam
     api_password: 1q2w3e
     api_host: node1
@@ -148,7 +146,7 @@ import time
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.text.converters import to_native
-from ansible_collections.community.general.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
 
 
 class ProxmoxSnapAnsible(ProxmoxAnsible):

@@ -31,13 +31,11 @@ options:
       - Specify the token ID.
       - Requires C(proxmoxer>=1.1.0) to work.
     type: str
-    version_added: 1.3.0
   api_token_secret:
     description:
       - Specify the token secret.
       - Requires C(proxmoxer>=1.1.0) to work.
     type: str
-    version_added: 1.3.0
   validate_certs:
     description:
       - If V(false), SSL certificates will not be validated.

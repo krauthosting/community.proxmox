@@ -12,15 +12,15 @@ import pytest
 
 proxmoxer = pytest.importorskip("proxmoxer")
 
-from ansible_collections.community.general.plugins.modules import proxmox_storage_contents_info
-from ansible_collections.community.general.tests.unit.compat.mock import patch
-from ansible_collections.community.general.tests.unit.plugins.modules.utils import (
+from ansible_collections.community.proxmox.plugins.modules import proxmox_storage_contents_info
+from ansible_collections.community.proxmox.tests.unit.compat.mock import patch
+from ansible_collections.community.proxmox.tests.unit.plugins.modules.utils import (
     AnsibleExitJson,
     AnsibleFailJson,
     ModuleTestCase,
     set_module_args,
 )
-import ansible_collections.community.general.plugins.module_utils.proxmox as proxmox_utils
+import ansible_collections.community.proxmox.plugins.module_utils.proxmox as proxmox_utils
 
 NODE1 = "pve"
 RAW_LIST_OUTPUT = [
@@ -63,7 +63,7 @@ class TestProxmoxStorageContentsInfo(ModuleTestCase):
         proxmox_utils.HAS_PROXMOXER = True
         self.module = proxmox_storage_contents_info
         self.connect_mock = patch(
-            "ansible_collections.community.general.plugins.module_utils.proxmox.ProxmoxAnsible._connect",
+            "ansible_collections.community.proxmox.plugins.module_utils.proxmox.ProxmoxAnsible._connect",
         ).start()
         self.connect_mock.return_value.nodes.return_value.storage.return_value.content.return_value.get.return_value = (
             RAW_LIST_OUTPUT

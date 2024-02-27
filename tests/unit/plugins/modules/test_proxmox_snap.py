@@ -17,10 +17,10 @@ mandatory_py_version = pytest.mark.skipif(
     reason='The proxmoxer dependency requires python2.7 or higher'
 )
 
-from ansible_collections.community.general.tests.unit.compat.mock import MagicMock, patch
-from ansible_collections.community.general.plugins.modules import proxmox_snap
-import ansible_collections.community.general.plugins.module_utils.proxmox as proxmox_utils
-from ansible_collections.community.general.tests.unit.plugins.modules.utils import set_module_args
+from ansible_collections.community.proxmox.tests.unit.compat.mock import MagicMock, patch
+from ansible_collections.community.proxmox.plugins.modules import proxmox_snap
+import ansible_collections.community.proxmox.plugins.module_utils.proxmox as proxmox_utils
+from ansible_collections.community.proxmox.tests.unit.plugins.modules.utils import set_module_args
 
 
 def get_resources(type):
@@ -60,7 +60,7 @@ def test_proxmox_snap_without_argument(capfd):
     assert json.loads(out)['failed']
 
 
-@patch('ansible_collections.community.general.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
+@patch('ansible_collections.community.proxmox.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
 def test_create_snapshot_check_mode(connect_mock, capfd, mocker):
     set_module_args({"hostname": "test-lxc",
                      "api_user": "root@pam",
@@ -81,7 +81,7 @@ def test_create_snapshot_check_mode(connect_mock, capfd, mocker):
     assert not json.loads(out)['changed']
 
 
-@patch('ansible_collections.community.general.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
+@patch('ansible_collections.community.proxmox.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
 def test_remove_snapshot_check_mode(connect_mock, capfd, mocker):
     set_module_args({"hostname": "test-lxc",
                      "api_user": "root@pam",
@@ -102,7 +102,7 @@ def test_remove_snapshot_check_mode(connect_mock, capfd, mocker):
     assert not json.loads(out)['changed']
 
 
-@patch('ansible_collections.community.general.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
+@patch('ansible_collections.community.proxmox.plugins.module_utils.proxmox.ProxmoxAnsible._connect')
 def test_rollback_snapshot_check_mode(connect_mock, capfd, mocker):
     set_module_args({"hostname": "test-lxc",
                      "api_user": "root@pam",

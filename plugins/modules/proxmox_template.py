@@ -9,10 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = r'''
 ---
 module: proxmox_template
 short_description: Management of OS templates in Proxmox VE cluster
+version_added: 1.0.0
 description:
   - allows you to upload/delete templates in Proxmox VE cluster
 attributes:
@@ -69,13 +70,13 @@ notes:
   - C(proxmoxer) >= 1.2.0 requires C(requests_toolbelt) to upload files larger than 256 MB.
 author: Sergei Antipov (@UnderGreen)
 extends_documentation_fragment:
-  - community.general.proxmox.documentation
-  - community.general.attributes
+  - community.proxmox.proxmox.documentation
+  - community.proxmox.attributes
 '''
 
-EXAMPLES = '''
+EXAMPLES = r'''
 - name: Upload new openvz template with minimal options
-  community.general.proxmox_template:
+  community.proxmox.proxmox_template:
     node: uk-mc02
     api_user: root@pam
     api_password: 1q2w3e
@@ -85,14 +86,14 @@ EXAMPLES = '''
 - name: >
     Upload new openvz template with minimal options use environment
     PROXMOX_PASSWORD variable(you should export it before)
-  community.general.proxmox_template:
+  community.proxmox.proxmox_template:
     node: uk-mc02
     api_user: root@pam
     api_host: node1
     src: ~/ubuntu-14.04-x86_64.tar.gz
 
 - name: Upload new openvz template with all options and force overwrite
-  community.general.proxmox_template:
+  community.proxmox.proxmox_template:
     node: uk-mc02
     api_user: root@pam
     api_password: 1q2w3e
@@ -103,7 +104,7 @@ EXAMPLES = '''
     force: true
 
 - name: Delete template with minimal options
-  community.general.proxmox_template:
+  community.proxmox.proxmox_template:
     node: uk-mc02
     api_user: root@pam
     api_password: 1q2w3e
@@ -112,7 +113,7 @@ EXAMPLES = '''
     state: absent
 
 - name: Download proxmox appliance container template
-  community.general.proxmox_template:
+  community.proxmox.proxmox_template:
     node: uk-mc02
     api_user: root@pam
     api_password: 1q2w3e
@@ -127,8 +128,8 @@ import time
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.community.general.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
-from ansible_collections.community.general.plugins.module_utils.version import LooseVersion
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
+from ansible_collections.community.proxmox.plugins.module_utils.version import LooseVersion
 
 REQUESTS_TOOLBELT_ERR = None
 try:

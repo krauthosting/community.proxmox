@@ -9,24 +9,24 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = r'''
 ---
 module: proxmox_node_info
 short_description: Retrieve information about one or more Proxmox VE nodes
-version_added: 8.2.0
+version_added: 1.0.0
 description:
   - Retrieve information about one or more Proxmox VE nodes.
 author: John Berninger (@jwbernin)
 extends_documentation_fragment:
-  - community.general.proxmox.documentation
-  - community.general.attributes
-  - community.general.attributes.info_module
+  - community.proxmox.proxmox.documentation
+  - community.proxmox.attributes
+  - community.proxmox.attributes.info_module
 '''
 
 
-EXAMPLES = '''
+EXAMPLES = r'''
 - name: List existing nodes
-  community.general.proxmox_node_info:
+  community.proxmox.proxmox_node_info:
     api_host: proxmox1
     api_user: root@pam
     api_password: "{{ password | default(omit) }}"
@@ -36,7 +36,7 @@ EXAMPLES = '''
 '''
 
 
-RETURN = '''
+RETURN = r'''
 proxmox_nodes:
     description: List of Proxmox VE nodes.
     returned: always, but can be empty
@@ -99,7 +99,7 @@ proxmox_nodes:
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.community.general.plugins.module_utils.proxmox import (
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (
     proxmox_auth_argument_spec, ProxmoxAnsible)
 
 

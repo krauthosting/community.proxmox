@@ -13,7 +13,7 @@ DOCUMENTATION = r'''
 ---
 module: proxmox_tasks_info
 short_description: Retrieve information about one or more Proxmox VE tasks
-version_added: 3.8.0
+version_added: 1.0.0
 description:
   - Retrieve information about one or more Proxmox VE tasks.
 author: 'Andreas Botzner (@paginabianca) <andreas at botzner dot com>'
@@ -29,15 +29,15 @@ options:
     aliases: ['upid', 'name']
     type: str
 extends_documentation_fragment:
-    - community.general.proxmox.documentation
-    - community.general.attributes
-    - community.general.attributes.info_module
+    - community.proxmox.proxmox.documentation
+    - community.proxmox.attributes
+    - community.proxmox.attributes.info_module
 '''
 
 
-EXAMPLES = '''
+EXAMPLES = r'''
 - name: List tasks on node01
-  community.general.proxmox_tasks_info:
+  community.proxmox.proxmox_tasks_info:
     api_host: proxmoxhost
     api_user: root@pam
     api_password: '{{ password | default(omit) }}'
@@ -47,7 +47,7 @@ EXAMPLES = '''
   register: result
 
 - name: Retrieve information about specific tasks on node01
-  community.general.proxmox_tasks_info:
+  community.proxmox.proxmox_tasks_info:
     api_host: proxmoxhost
     api_user: root@pam
     api_password: '{{ password | default(omit) }}'
@@ -59,7 +59,7 @@ EXAMPLES = '''
 '''
 
 
-RETURN = '''
+RETURN = r'''
 proxmox_tasks:
     description: List of tasks.
     returned: on success
@@ -118,7 +118,7 @@ msg:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.community.general.plugins.module_utils.proxmox import (
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (
     proxmox_auth_argument_spec, ProxmoxAnsible)
 
 

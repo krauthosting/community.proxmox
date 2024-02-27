@@ -13,7 +13,7 @@ module: proxmox_pool_member
 short_description: Add or delete members from Proxmox VE cluster pools
 description:
   - Create or delete a pool member in Proxmox VE clusters.
-version_added: 7.1.0
+version_added: 1.0.0
 author: "Sergei Antipov (@UnderGreen) <greendayonfire@gmail.com>"
 attributes:
   check_mode:
@@ -48,13 +48,13 @@ options:
     type: str
 
 extends_documentation_fragment:
-    - community.general.proxmox.documentation
-    - community.general.attributes
+    - community.proxmox.proxmox.documentation
+    - community.proxmox.attributes
 """
 
-EXAMPLES = """
+EXAMPLES = r"""
 - name: Add new VM to Proxmox VE pool
-  community.general.proxmox_pool_member:
+  community.proxmox.proxmox_pool_member:
     api_host: node1
     api_user: root@pam
     api_password: password
@@ -62,7 +62,7 @@ EXAMPLES = """
     member: 101
 
 - name: Add new storage to Proxmox VE pool
-  community.general.proxmox_pool_member:
+  community.proxmox.proxmox_pool_member:
     api_host: node1
     api_user: root@pam
     api_password: password
@@ -71,7 +71,7 @@ EXAMPLES = """
     type: storage
 
 - name: Remove VM from the Proxmox VE pool using VM name
-  community.general.proxmox_pool_member:
+  community.proxmox.proxmox_pool_member:
     api_host: node1
     api_user: root@pam
     api_password: password
@@ -80,7 +80,7 @@ EXAMPLES = """
     state: absent
 
 - name: Remove storage from the Proxmox VE pool
-  community.general.proxmox_pool_member:
+  community.proxmox.proxmox_pool_member:
     api_host: node1
     api_user: root@pam
     api_password: password
@@ -90,7 +90,7 @@ EXAMPLES = """
     state: absent
 """
 
-RETURN = """
+RETURN = r"""
 poolid:
   description: The pool ID.
   returned: success
@@ -109,7 +109,7 @@ msg:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.community.general.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (proxmox_auth_argument_spec, ProxmoxAnsible)
 
 
 class ProxmoxPoolMemberAnsible(ProxmoxAnsible):

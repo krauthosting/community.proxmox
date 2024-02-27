@@ -12,7 +12,7 @@ DOCUMENTATION = r'''
 ---
 module: proxmox_disk
 short_description: Management of a disk of a Qemu(KVM) VM in a Proxmox VE cluster
-version_added: 5.7.0
+version_added: 1.0.0
 description:
   - Allows you to perform some supported operations on a disk in Qemu(KVM) Virtual Machines in a Proxmox VE cluster.
 author: "Castor Sky (@castorsky) <csky57@gmail.com>"
@@ -265,7 +265,6 @@ options:
       - V(cdrom) to use physical CD/DVD drive.
       - V(none) to unmount image from existent CD-ROM or create empty CD-ROM drive.
     type: str
-    version_added: 8.1.0
   queues:
     description:
       - Number of queues (SCSI only).
@@ -325,13 +324,13 @@ options:
       - The drive's worldwide name, encoded as 16 bytes hex string, prefixed by V(0x).
     type: str
 extends_documentation_fragment:
-  - community.general.proxmox.documentation
-  - community.general.attributes
+  - community.proxmox.proxmox.documentation
+  - community.proxmox.attributes
 '''
 
-EXAMPLES = '''
+EXAMPLES = r'''
 - name: Create new disk in VM (do not rewrite in case it exists already)
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -345,7 +344,7 @@ EXAMPLES = '''
     state: present
 
 - name: Create new disk in VM (force rewrite in case it exists already)
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -359,7 +358,7 @@ EXAMPLES = '''
     state: present
 
 - name: Update existing disk
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -372,7 +371,7 @@ EXAMPLES = '''
     state: present
 
 - name: Grow existing disk
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -383,7 +382,7 @@ EXAMPLES = '''
     state: resized
 
 - name: Detach disk (leave it unused)
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -393,7 +392,7 @@ EXAMPLES = '''
     state: detached
 
 - name: Move disk to another storage
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_password: secret
@@ -404,7 +403,7 @@ EXAMPLES = '''
     state: moved
 
 - name: Move disk from one VM to another
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -415,7 +414,7 @@ EXAMPLES = '''
     state: moved
 
 - name: Remove disk permanently
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_password: secret
@@ -424,7 +423,7 @@ EXAMPLES = '''
     state: absent
 
 - name: Mount ISO image on CD-ROM (create drive if missing)
-  community.general.proxmox_disk:
+  community.proxmox.proxmox_disk:
     api_host: node1
     api_user: root@pam
     api_token_id: token1
@@ -436,7 +435,7 @@ EXAMPLES = '''
     state: present
 '''
 
-RETURN = '''
+RETURN = r'''
 vmid:
   description: The VM vmid.
   returned: success
@@ -450,7 +449,7 @@ msg:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.community.general.plugins.module_utils.proxmox import (proxmox_auth_argument_spec,
+from ansible_collections.community.proxmox.plugins.module_utils.proxmox import (proxmox_auth_argument_spec,
                                                                                 ProxmoxAnsible)
 from re import compile, match, sub
 from time import sleep
