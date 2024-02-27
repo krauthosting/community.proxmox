@@ -101,15 +101,7 @@ If you would like to raise an issue with us, this is the best way to get in touc
 
 We announce important development changes and releases through Ansible's [The Bullhorn newsletter](https://docs.ansible.com/ansible/devel/community/communication.html#the-bullhorn). If you are a collection developer, be sure you are subscribed.
 
-Join us on:
-* The Ansible forum:
-    * [News & Announcements](https://forum.ansible.com/c/news/5/none)
-    * [Get Help](https://forum.ansible.com/c/help/6/none)
-    * [Social Spaces](https://forum.ansible.com/c/chat/4)
-* Matrix chat rooms:
-    * [#users:ansible.com](https://matrix.to/#/#users:ansible.com): general use questions and support
-    * [#community:ansible.com](https://matrix.to/#/#community:ansible.com): community and collection development questions
-    * [#social:ansible.com](https://matrix.to/#/#social:ansible.com): to say "Good morning, community!"
+Join us on the Ansible forum in the [Proxmox Collection Group](https://forum.ansible.com/g/proxmox-collection)
 
 We take part in the global [Ansible contributor summit](https://github.com/ansible/community/wiki/Contributor-Summit) virtually or in-person. Track [The Bullhorn newsletter](https://docs.ansible.com/ansible/devel/community/communication.html#the-bullhorn) and join us.
 
