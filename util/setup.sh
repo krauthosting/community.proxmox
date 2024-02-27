@@ -15,6 +15,9 @@ source .venv/bin/activate
 
 echo "Installing collection requirements..."
 python3 -m pip install --upgrade pip --quiet # safe as we are using a virtualenv
+# install the main devel requirements
 python3 -m pip install --quiet -r requirements.txt --upgrade
+# and the docs requirements
+python3 -m pip install --quiet -r docs/docsite/requirements.txt --upgrade
 
 echo "Done! Please activate your virtualenv with: '. .venv/bin/activate'"

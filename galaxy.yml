@@ -19,3 +19,7 @@ build_ignore:
 # https://docs.ansible.com/ansible/devel/dev_guide/developing_collections_distributing.html#ignoring-files-and-folders
   - .gitignore
   - changelogs/.plugin-cache.yaml
+  - .venv
+  - docs/docsite/build
+  - docs/docsite/temp-rst
+  - docs/docsite/tmp

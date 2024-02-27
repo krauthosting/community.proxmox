@@ -1,0 +1,6 @@
+---
+# see https://ansible.readthedocs.io/projects/antsibull-docs/collection-docs/#adding-extra-documentation
+sections:
+  - title: Guides
+    toctree:
+      - guide_migration_community_general
